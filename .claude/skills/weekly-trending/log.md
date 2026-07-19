@@ -5,6 +5,55 @@ be re-suggested unless something materially changed.
 
 ---
 
+## 2026-07-19
+
+Scanned `github.com/trending?since=weekly` and `github.com/trending/python?since=weekly`.
+`hallmark` re-appeared (now ~8,834 stars, up from ~2,274) — already logged
+2026-07-15, not re-listed. Skipped as not relevant (no concrete
+Kalamata/SourcingX tie): `OpenCut`, `Vibe-Trading`, `DeepTutor`, `OfficeCLI`
+(seen before), `cangjie-skill`, `DesktopCommanderMCP` (redundant with
+Claude Code's own terminal access), `openai/codex` (already the reviewer
+agent, not a new tool to adopt), `openinterpreter`, `abseil-cpp` (seen
+before), `orca` (agent-fleet orchestration, but Kalamata's own
+`cappedParallel` Workflow pattern already covers this), `ui-skills`,
+`nanobot`, `ai-hedge-fund`, `claude-video` (seen before), `QwenPaw`,
+`ossie`, `zapret`, `lingbot-map`, `public-apis`, `grok-1`, `posthog`
+(too broad a platform for the actual gap here).
+
+1. **prefect** (~480 stars this week / mature project) — a Python workflow
+   orchestration framework with built-in retries, scheduling, and
+   observability. Relevant because: Kalamata's reliability layer
+   (`error_handling.py`'s circuit breaker, `api_helpers.py`'s token-bucket
+   rate limiting) and its Claude Code Dynamic Workflow orchestration
+   (`daily-routine.js`'s hand-rolled `cappedParallel`) solve exactly what
+   Prefect ships out of the box.
+   Next step: not a wholesale replacement (the Workflow's agent fan-out is
+   too custom to port) — but worth comparing Prefect's retry/observability
+   primitives against `error_handling.py` for the plain-Python steps.
+2. **claude-code-templates** (~864 stars) — a CLI for configuring and
+   monitoring Claude Code setups. Relevant because: Kalamata alone runs 50+
+   skills, several hooks, and multiple Dynamic Workflows under `.claude/` —
+   exactly the kind of sprawl this tool is meant to audit/configure.
+   Next step: point it at Kalamata's `.claude/` directory and see if it
+   flags stale or unused skills/hooks worth cleaning up.
+3. **graphify** (~8,611 stars) — turns a codebase into a queryable
+   knowledge graph for AI coding assistants. Relevant because: SourcingX's
+   `dashboard.py` is a single ~7,300-line file, and both projects have two
+   AI agents (Claude + Codex) working the same large codebase — a
+   persistent semantic map could sharpen how fast either agent locates the
+   right call site.
+   Next step: try it on SourcingX's `dashboard.py` and see if it
+   meaningfully speeds up context-gathering before a change, vs. plain grep.
+
+Honorable mention: **spec-kit** (~2,724 stars) — a spec-driven-development
+toolkit. Kalamata already writes extensive `PLAN-*.md` docs
+(`PLAN-adaptive-search-v3.md`, `PLAN-learn-from-winners.md`, etc.) before
+big changes — spec-kit might formalize a pattern that's already informally
+in use. Not in the top 3 only because the informal version is already
+working.
+
+---
+
 ## 2026-07-15
 
 Scanned `github.com/trending?since=weekly`. Most of this week's list is
